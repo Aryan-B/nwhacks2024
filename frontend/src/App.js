@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import Form from "./components/form";
+import List from "./components/list";
+import Item from "./components/item";
+import Navigation from "./components/nav";
+import Stat from "./components/stat";
+
+import "./App.css";
+
+import Login from './components/Login';
+import Layout from './components/Layout';
+import Missing from './components/Missing';
+import Unauthorized from './components/Unauthorized';
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoutes from "./components/protectedRoutes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+<>    
+<Routes>
+        <Route path="login" element={<Login />} />
+        <Route element={<ProtectedRoutes/>}>
+          <Route path="unauthorized" element={<Unauthorized />} />
+          <Route path="/" element={<Layout />}>
+            <Route path="*" element={<Missing />} />
+          </Route>
+        </Route>
+    </Routes>
+    </>
   );
 }
 
