@@ -1,7 +1,9 @@
 .left-menu {
     background-color: #00000080;
     display: flex;
+    flex: 0 0 auto;
     flex-direction: column;
+
     /* gap: 20px; */
     /* padding: 20px 0px; */
     position: absolute;
@@ -156,6 +158,7 @@
     position: relative;
   }
   
+
 .equipment {
   margin-left: 20px;
 }
@@ -178,6 +181,7 @@
     margin-left: 10px;
   }
   
+
   .left-menu .filter {
     align-items: center;
     align-self: stretch;

@@ -1,3 +1,4 @@
+
 import { input } from "bootstrap";
 import "../styles/menu.css";
 
@@ -67,28 +68,6 @@ export default function Menu() {
           </label>
         </div>
       </div>
-
-
-      {/* <div className="divider" />
-      <div className="clip-frame">
-        <div className="selectors">
-          <div className="filter-section">
-            <div className="filter-container">
-              <div className="filters">
-              </div>
-
-            </div>
-            <div className="filter-buttons">
-              <button className="button">
-                <div className="text-wrapper-7">Apply filters</div>
-              </button>
-              <button className="div-wrapper">
-                <div className="text-wrapper-7">Reset filters</div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 
