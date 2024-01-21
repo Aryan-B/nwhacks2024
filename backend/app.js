@@ -13,6 +13,10 @@ const Passage = require("@passageidentity/passage-node");
 
 const middleware = require("./api/middleware.js");
 
+// module.exports = { getAvailableRooms, makeBooking };
+const { getAvailableRooms, makeBooking } = require("./api/check.js");
+
+
 // configure headers for the app
 
 const passage = new Passage({
@@ -111,6 +115,24 @@ app.get("/verify", middleware, (req, res) => {
 app.get("/getCode", middleware, async (req, res) => {
   res.status(200).send({ msg: "token verified", isAuth: true });
 });
+
+
+app.get("/getRooms", async (req, res) => {
+    const startTimeHour = parseInt(req.body.startTime);
+    const startTime = new Date();
+    startTime.setHours(startTimeHour, 0, 0, 0);
+    const { red, yellow, green } = await getAvailableRooms(startTime);
+    res.send({ red, yellow, green });
+});
+
+
+app.post("/makeBooking", async (req, res) => {
+    const roomName = req.body.roomName;
+    const startTime = new Date(req.body.startTime);
+    const { success, message } = await makeBooking(roomName, startTime);
+    res.send({ success, message });
+}
+);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
