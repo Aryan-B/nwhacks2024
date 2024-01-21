@@ -60,40 +60,52 @@ export default function Landing() {
       // apply overview
       mapView.addInteractivePolygonsForAllLocations();
 
-      venue.locations.forEach((location) => {
-        const green = ["008", "029"];
-        const yellow = ["014", "001"];
-        const red = ["011", "Cube"];
-        const gray = ["067", "093"];
+      let green = [];
+      let yellow = [];
+      let red = [];
+      let gray = [];
+      const authToken = localStorage.getItem("psg_auth_token");
 
-        for (const r of green) {
-          if (location.id.includes(r)) {
-            location.polygons.forEach((polygon) => {
-              mapView.setPolygonColor(polygon, "#46e83a");
-            });
+      axios.post(`${API_URL}/getRooms`, { "startTime": 12 }, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }).then((response) => {
+        green = response.data.green;
+        yellow = response.data.yellow;
+        red = response.data.red;
+
+        venue.locations.forEach((location) => {
+          for (const r of green) {
+            if (location.id.includes(r)) {
+              location.polygons.forEach((polygon) => {
+                mapView.setPolygonColor(polygon, "#46e83a");
+              });
+            }
           }
-        }
-        for (const r of yellow) {
-          if (location.id.includes(r)) {
-            location.polygons.forEach((polygon) => {
-              mapView.setPolygonColor(polygon, "#faec52");
-            });
+          for (const r of yellow) {
+            if (location.id.includes(r)) {
+              location.polygons.forEach((polygon) => {
+                mapView.setPolygonColor(polygon, "#faec52");
+              });
+            }
           }
-        }
-        for (const r of red) {
-          if (location.id.includes(r)) {
-            location.polygons.forEach((polygon) => {
-              mapView.setPolygonColor(polygon, "#f7332d");
-            });
+          for (const r of red) {
+            if (location.id.includes(r)) {
+              location.polygons.forEach((polygon) => {
+                mapView.setPolygonColor(polygon, "#f7332d");
+              });
+            }
           }
-        }
-        for (const r of gray) {
-          if (location.id.includes(r)) {
-            location.polygons.forEach((polygon) => {
-              mapView.setPolygonColor(polygon, "#a19f9f");
-            });
+          for (const r of gray) {
+            if (location.id.includes(r)) {
+              location.polygons.forEach((polygon) => {
+                mapView.setPolygonColor(polygon, "#a19f9f");
+              });
+            }
           }
-        }
+        });
       });
 
       mapView.FloatingLabels.labelAllLocations({
@@ -138,18 +150,16 @@ export default function Landing() {
             departureMarkerTemplate: (props) => {
               // The departure marker is the person at the start location
               return `<div style="display: flex; flex-direction: column; justify-items: center; align-items: center;">
-          <div class="departure-marker">${
-            props.location ? props.location.name : "Departure"
-          }</div>
+          <div class="departure-marker">${props.location ? props.location.name : "Departure"
+                }</div>
           ${props.icon}
           </div>`;
             },
             destinationMarkerTemplate: (props) => {
               // The destination marker is the pin at the end location
               return `<div style="display: flex; flex-direction: column; justify-items: center; align-items: center;">
-          <div class="destination-marker">${
-            props.location ? props.location.name : "Destination"
-          }</div>
+          <div class="destination-marker">${props.location ? props.location.name : "Destination"
+                }</div>
           ${props.icon}
           </div>`;
             },
@@ -190,6 +200,38 @@ export default function Landing() {
           setEndLoc(location.name);
         }
         setLastClicked((prevMode) => !prevMode);
+        return;
+      }
+    } else {
+      if (!mapView || !venue) {
+        return;
+      }
+
+      for (const polygon of props.polygons) {
+        const location = mapView.getPrimaryLocationForPolygon(polygon);
+
+        const authToken = localStorage.getItem("psg_auth_token");
+        console.log(location.name);
+
+        axios.post(`${API_URL}/makeBooking`, { "roomName": location.name, "startTime": 12 }, {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }).then((response) => {
+          console.log(response);
+          const pass = response.data.success;
+          if (pass) {
+            venue.locations.forEach((l) => {
+              if (l.id.includes(location.name)) {
+                l.polygons.forEach((polygon) => {
+                  mapView.setPolygonColor(polygon, "#f7332d");
+                });
+              }
+            });
+          }
+        });
+
         return;
       }
     }

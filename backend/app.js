@@ -117,7 +117,7 @@ app.get("/getCode", middleware, async (req, res) => {
 });
 
 
-app.get("/getRooms", async (req, res) => {
+app.post("/getRooms", async (req, res) => {
     const startTimeHour = parseInt(req.body.startTime);
     const startTime = new Date();
     startTime.setHours(startTimeHour, 0, 0, 0);
