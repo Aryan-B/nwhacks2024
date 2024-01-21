@@ -19,10 +19,6 @@ import {
         try {
           console.log(`[useVenueMaker] Fetching map with ID "${options.mapId}"`);
           const data = await getVenueMaker(options);
-
-          console.log("DATA")
-          console.log(data)
-
           // Update state variable after data is fetched
           if (!ignore) {
             console.log(`[useVenueMaker] Received map "${data.venue.name}"`);
