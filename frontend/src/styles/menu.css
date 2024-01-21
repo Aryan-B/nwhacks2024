@@ -1,13 +1,15 @@
 .left-menu {
-    align-items: center;
     background-color: #00000080;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px 0px;
+    /* gap: 20px; */
+    /* padding: 20px 0px; */
     position: absolute;
     width: 20%;
     z-index: 101;
+    height: 80%;
+    margin-left: 10px;
+    margin-top: 10px;
   }
   
   .left-menu .header {
@@ -152,6 +154,28 @@
     gap: 5px;
     justify-content: center;
     position: relative;
+  }
+  
+.equipment {
+  margin-left: 20px;
+}
+  .white-line {
+    border-top: 2px solid #fff; 
+  }
+
+  .sbar {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .head {
+    font-family: "Satoshi Variable-Bold", Helvetica;
+    font-size: 50px;
+    font-weight: 700;
+    color: white; /* Text color */
+    text-align: left;
+    font-weight: bold;
+    margin-left: 10px;
   }
   
   .left-menu .filter {
