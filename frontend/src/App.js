@@ -6,7 +6,6 @@ import { Routes, Route } from "react-router-dom";
 import Landing from "./components/Landing";
 import Layout from "./components/Layout";
 import ProtectedRoutes from "./components/protectedRoutes";
-import Navigate from "./components/Navigate";
 
 function App() {
   return (
@@ -16,9 +15,6 @@ function App() {
           <Route path="*" element={<Missing />} />
         </Route>
         <Route path="home" element={<Layout />}>
-          <Route path="*" element={<Missing />} />
-        </Route>
-        <Route path="navigate" element={<Navigate />}>
           <Route path="*" element={<Missing />} />
         </Route>
       </Routes>
