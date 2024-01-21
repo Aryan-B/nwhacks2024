@@ -1,7 +1,311 @@
-.menu-container{
+
+.left-menu {
+    align-items: center;
+    background-color: #00000080;
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    padding: 20px 0px;
+    position: absolute;
+    width: 20%;
+    z-index: 101;
+  }
+  
+  .left-menu .header {
     align-items: center;
+    align-self: stretch;
+    background-color: transparent;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px 30px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .title {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .text-wrapper {
+    color: #ffffff;
+    font-family: "Satoshi Variable-Bold", Helvetica;
+    font-size: 50px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  
+  .left-menu .div {
+    color: #ffffff;
+    font-family: "Satoshi Variable-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  
+  .left-menu .search-bar {
+    align-items: center;
+    align-self: stretch;
+    background-color: #ffffff;
+    border-radius: 50px;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    overflow: hidden;
+    padding: 15px 20px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .text-wrapper-2 {
+    color: #000000;
+    font-family: "Satoshi Variable-Medium", Helvetica;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  
+  .left-menu .divider {
+    align-self: stretch;
+    background-color: #ffffff;
+    border-radius: 50px;
+    height: 1px;
+    opacity: 0.5;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .clip-frame {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 40px;
+    overflow-y: scroll;
+    padding: 20px 30px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .selectors {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .filter-section {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .filter-container {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 42px;
     justify-content: center;
-    margin: 10px;
-}
+    overflow-y: scroll;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .filters {
+    align-items: flex-start;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 5px;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .left-menu .filter {
+    align-items: center;
+    align-self: stretch;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #00000033;
+    border-radius: 15px;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    overflow: hidden;
+    padding: 10px 20px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .text-layout {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .left-menu .text-wrapper-3 {
+    color: #000000;
+    font-family: "Satoshi Variable-Bold", Helvetica;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    opacity: 0.5;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .left-menu .text-wrapper-4 {
+    color: #7d7d7d;
+    font-family: "Satoshi Variable-Bold", Helvetica;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .left-menu .div-2 {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .text-wrapper-5 {
+    color: #ffffff;
+    font-family: "Satoshi Variable-Medium", Helvetica;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .left-menu .checkbox {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 11px;
+    position: relative;
+  }
+  
+  .left-menu .box {
+    border: 0.75px solid;
+    border-color: #ffffff;
+    height: 15px;
+    position: relative;
+    width: 15px;
+  }
+  
+  .left-menu .text-wrapper-6 {
+    color: #ffffff;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .left-menu .filter-buttons {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+  }
+  
+  .left-menu .button {
+    all: unset;
+    align-items: center;
+    background-color: #32c50d;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    overflow: hidden;
+    padding: 10px 20px;
+    position: relative;
+  }
+  
+  .left-menu .text-wrapper-7 {
+    color: #ffffff;
+    font-family: "Satoshi Variable-Bold", Helvetica;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -2px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .left-menu .div-wrapper {
+    all: unset;
+    align-items: center;
+    border: 2px solid;
+    border-color: #ffffff;
+    border-radius: 25px;
+    box-sizing: border-box;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    overflow: hidden;
+    padding: 10px 20px;
+    position: relative;
+  }
