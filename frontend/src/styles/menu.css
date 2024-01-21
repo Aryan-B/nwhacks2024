@@ -12,6 +12,8 @@
     height: 80%;
     margin-left: 10px;
     margin-top: 10px;
+    border-radius: 5px;
+    padding: 10px;
   }
   
   .left-menu .header {
@@ -160,7 +162,12 @@
   
 
 .equipment {
-  margin-left: 20px;
+    margin-top: 20px;
+  margin-left: 5px;
+  color: white;
+  display: flex;
+  align-items: flex-start;
+    flex-direction: column;
 }
   .white-line {
     border-top: 2px solid #fff; 

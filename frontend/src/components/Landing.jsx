@@ -13,9 +13,7 @@ import { Dropdown, Button } from "react-bootstrap";
 import useMapChanged from "./hooks/useMapChanged";
 import Menu from "./menu";
 
-
 export default function Landing() {
-
   const credentials = useMemo(
     () => ({
       mapId: "65ac2d5aca641a9a1399dc0e",
@@ -249,9 +247,6 @@ export default function Landing() {
     }
   }, [mapView, selectedFloor, venue, startLoc, endLoc]);
 
-
-
-
   const [showSidebar, setShowSidebar] = useState(false);
   const [result, setResult] = useState({
     isLoading: true,
@@ -290,7 +285,6 @@ export default function Landing() {
         }
       });
   };
-
 
   useEffect(() => {
     const authToken = localStorage.getItem("psg_auth_token");
@@ -387,8 +381,11 @@ export default function Landing() {
           <Menu />
           <div className="location-name">
             {venue?.venue.name ?? "Loading..."}
-            <Dropdown onSelect={(eventKey) => setSelectedFloor(eventKey)}>
-              <Dropdown.Toggle variant="info" id="dropdown-basic">
+          </div>
+        </div>
+        <div className="floor-container">
+        <Dropdown onSelect={(eventKey) => setSelectedFloor(eventKey)}>
+              <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                 {selectedFloor}
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -401,11 +398,10 @@ export default function Landing() {
               </Dropdown.Menu>
             </Dropdown>
             <div className="navigate-button">
-              <Button variant="info" onClick={handleNavigateClick}>
+              <Button variant="secondary" onClick={handleNavigateClick}>
                 {isOverviewMode ? "Navigate" : "Overview"}
               </Button>
             </div>
-          </div>
         </div>
 
         <div id="map-container" ref={elementRef}></div>

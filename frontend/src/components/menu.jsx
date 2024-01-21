@@ -35,8 +35,8 @@ export default function Menu() {
         </div>
       </div>
 
-      <div id="equitment" className="equipment col-md-6">
-        <p>Equipment</p>
+      <div id="equipment" className="equipment">
+        <h2>Equipment</h2>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="Whiteboard" />
           <label class="form-check-label" for="Whiteboard">
