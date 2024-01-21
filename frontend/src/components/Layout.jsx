@@ -9,10 +9,11 @@ import useMapView from "./hooks/useMapView";
 import useVenueMaker from "./hooks/useVenueMaker";
 import "../styles/layout.css";
 import { Dropdown, Button } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
+import useMapChanged from "./hooks/useMapChanged";
+import { end } from "@popperjs/core";
 
 export default function Layout() {
-  const navigate = useNavigate();
+
   const credentials = useMemo(
     () => ({
       mapId: "65ac2d5aca641a9a1399dc0e",
@@ -26,18 +27,26 @@ export default function Layout() {
   const venue = useVenueMaker(credentials);
 
   const [selectedFloor, setSelectedFloor] = useState("Select Floor");
+  const [isOverviewMode, setIsOverviewMode] = useState(true);
+  const [selectedMap, setSelectedMap] = useState();
+  const [startLoc, setStartLoc] = useState("091");
+  const [endLoc, setEndLoc] = useState("104");
+  const [lastClicked, setLastClicked] = useState(true);
 
   const mapOptions = useMemo(
     () => ({
-      backgroundColor: "#dda1e6", // Background colour behind the map
+      backgroundColor: "#dda1e6",
+      xRayPath: true,
+      multiBufferRendering: true
     }),
     []
   );
 
+
   const { elementRef, mapView } = useMapView(venue, mapOptions);
 
   const handleNavigateClick = () => {
-    navigate('/navigate');
+    setIsOverviewMode((prevMode) => !prevMode);
   };
 
   useEffect(() => {
@@ -45,29 +54,160 @@ export default function Layout() {
       return;
     }
 
-    mapView.addInteractivePolygonsForAllLocations();
+    if (isOverviewMode) {
+      // reset from nav
+      mapView.Journey.clear();
 
-    venue.locations.forEach((location) => {
-      // An obstruction is something like a desk
-      if (location.id.includes("obstruction")) {
+      // apply overview
+      mapView.addInteractivePolygonsForAllLocations();
+
+      venue.locations.forEach((location) => {
+        const green = ["008", "029"];
+        const yellow = ["014", "001"];
+        const red = ["011", "Cube"];
+        const gray = ["067", "093"];
+
+        for (const r of green) {
+          if (location.id.includes(r)) {
+            location.polygons.forEach((polygon) => {
+              mapView.setPolygonColor(polygon, "#46e83a");
+            });
+          }
+        }
+        for (const r of yellow) {
+          if (location.id.includes(r)) {
+            location.polygons.forEach((polygon) => {
+              mapView.setPolygonColor(polygon, "#faec52");
+            });
+          }
+        }
+        for (const r of red) {
+          if (location.id.includes(r)) {
+            location.polygons.forEach((polygon) => {
+              mapView.setPolygonColor(polygon, "#f7332d");
+            });
+          }
+        }
+        for (const r of gray) {
+          if (location.id.includes(r)) {
+            location.polygons.forEach((polygon) => {
+              mapView.setPolygonColor(polygon, "#a19f9f");
+            });
+          }
+        }
+      });
+
+
+      mapView.FloatingLabels.labelAllLocations({
+        interactive: true // Make labels interactive
+      });
+    }
+  }, [mapView, venue, isOverviewMode]);
+
+
+  /* Monitor floor level changes and update the UI */
+  useMapChanged(mapView, (map) => {
+    setSelectedMap(map);
+  });
+
+
+
+  useEffect(() => {
+    if (!mapView || !venue) {
+      return;
+    }
+
+    if (!isOverviewMode) {
+      // reset from overview
+      // mapView.FloatingLabels.removeAll();
+
+      venue.locations.forEach((location) => {
         location.polygons.forEach((polygon) => {
-          mapView.setPolygonHoverColor(polygon, "#00ff00");
+          mapView.clearAllPolygonColors();
         });
-      } else {
-        // if booked, hover red
-        // else, hover green?
-        location.polygons.forEach((polygon) => {
-          mapView.setPolygonHoverColor(polygon, "#fff8a8");
-        });
+      });
+
+      // apply nav
+      const startLocation = venue.locations.find((location) =>
+        location.id.includes(startLoc)
+      );
+      // const startLocation = venue.locations.find((location) =>
+      //   location.id.includes("091")
+      // );
+
+      // Navigate to some location on another floor
+      const endLocation = venue.locations.find((location) =>
+        location.id.includes(endLoc)
+      );
+      // const endLocation = venue.locations.find((location) =>
+      //   location.id.includes("104")
+      // );
+
+      if (startLocation && endLocation) {
+        // Generate a route between these two locations
+        const directions = startLocation.directionsTo(endLocation);
+        if (directions && directions.path.length > 0) {
+          // The Journey class draws the path & can be configured with a few options
+          mapView.Journey.draw(directions, {
+            polygonHighlightColor: "#140575", // Start and end polygons colour
+            departureMarkerTemplate: (props) => {
+              // The departure marker is the person at the start location
+              return `<div style="display: flex; flex-direction: column; justify-items: center; align-items: center;">
+          <div class="departure-marker">${props.location ? props.location.name : "Departure"
+                }</div>
+          ${props.icon}
+          </div>`;
+            },
+            destinationMarkerTemplate: (props) => {
+              // The destination marker is the pin at the end location
+              return `<div style="display: flex; flex-direction: column; justify-items: center; align-items: center;">
+          <div class="destination-marker">${props.location ? props.location.name : "Destination"
+                }</div>
+          ${props.icon}
+          </div>`;
+            },
+            connectionTemplate: (props) => {
+              // The connection marker is the button to switch floors on the map
+              return `<div class="connection-marker">Take ${props.type} ${props.icon}</div>`;
+            },
+            pathOptions: {
+              nearRadius: 0.25, // The path size in metres at the nearest zoom
+              farRadius: 1, // The path size in metres at the furthest zoom
+              color: "#40A9FF", // Path colour
+              displayArrowsOnPath: false, // Arrow animation on path
+              showPulse: true, // Pulse animation on path
+              pulseIterations: Infinity // How many times to play the pulse animation
+            }
+          });
+
+          // Set the map (floor level) to start at the beginning of the path
+          mapView.setMap(directions.path[0].map);
+        }
       }
-    });
+      // Update the selected map state
+      setSelectedMap(mapView.currentMap);
+    }
+  }, [mapView, venue, isOverviewMode, startLoc, endLoc]);
 
 
-    mapView.FloatingLabels.labelAllLocations({
-      interactive: true // Make labels interactive
-    });
+  useMapClick(mapView, (props) => {
+    if (!isOverviewMode) {
+      if (!mapView || !venue) {
+        return;
+      }
 
-  }, [mapView, venue]);
+      for (const polygon of props.polygons) {
+        const location = mapView.getPrimaryLocationForPolygon(polygon);
+        if (lastClicked) {
+          setStartLoc(location.name);
+        } else {
+          setEndLoc(location.name);
+        }
+        setLastClicked((prevMode) => !prevMode);
+        return;
+      }
+    }
+  });
 
   useEffect(() => {
     if (mapView && selectedFloor) {
@@ -77,58 +217,7 @@ export default function Layout() {
         setSelectedFloor(floor.name);
       }
     }
-  }, [mapView, selectedFloor, venue]);
-
-  useMapClick(mapView, (props) => {
-    if (!mapView || !venue) {
-      return;
-    }
-
-    // Interact with clicked markers
-    for (const marker of props.markers) {
-      console.log(`[useMapClick] Clicked marker ID "${marker.id}"`);
-      mapView.Markers.remove(marker.id);
-      return;
-    }
-
-    // Interact with clicked Floating Labels
-    for (const label of props.floatingLabels) {
-      console.log(`[useMapClick] Clicked label "${label.text}"`);
-
-      if (label.node) {
-        mapView.FloatingLabels.remove(label.node);
-      }
-      return;
-    }
-
-    // Interact with clicked polygons
-    for (const polygon of props.polygons) {
-      console.log(`[useMapClick] Clicked polygon ID "${polygon.id}"`);
-
-      // Get location details for the clicked polygon
-      const location = mapView.getPrimaryLocationForPolygon(polygon);
-
-      // Convert the click information to a coordinate on the map
-      const clickedCoordinate = mapView.currentMap.createCoordinate(
-        props.position.latitude,
-        props.position.longitude
-      );
-
-      // And add a new Marker where we clicked
-      mapView.Markers.add(
-        clickedCoordinate,
-        // Provide a HTML template string for the Marker appearance
-        `<div class="marker">${location.name}</div>`,
-        {
-          interactive: true, // Make markers clickable
-          // rank: COLLISION_RANKING_TIERS.ALWAYS_VISIBLE, // Marker collision priority
-          // anchor: MARKER_ANCHOR.TOP, // Position of the Marker
-        }
-      );
-      return;
-    }
-  });
-
+  }, [mapView, selectedFloor, venue, startLoc, endLoc]);
 
   return (
     <div id="app" className="AppTest">
@@ -150,8 +239,9 @@ export default function Layout() {
           </Dropdown>
           <div className="navigate-button">
             <Button variant="info" onClick={handleNavigateClick}>
-              Navigate
+              {isOverviewMode ? "Navigate" : "Overview"}
             </Button>
+
           </div>
         </div>
       </div>
