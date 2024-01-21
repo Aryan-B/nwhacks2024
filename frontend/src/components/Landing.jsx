@@ -6,7 +6,6 @@ import "../styles/landing.css";
 import { useMemo } from "react";
 import useMapView from "./hooks/useMapView";
 import useVenueMaker from "./hooks/useVenueMaker";
-import { OpenAIApiAxiosParamCreator } from "openai";
 import axios from "axios";
 
 export default function Landing() {
