@@ -35,9 +35,15 @@ export default function Landing() {
 
   const mapOptions = useMemo(
     () => ({
-      backgroundColor: "#dda1e6",
+      // backgroundColor: "#dda1e6",
       xRayPath: true,
       multiBufferRendering: true,
+      outdoorView: {
+        enabled: true,
+        headers: {
+          "x-mappedin-tiles-key": "bndoYWNrc3htYXBwZWRpbg" // Access token
+        }
+      }
     }),
     []
   );
