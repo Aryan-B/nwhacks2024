@@ -117,7 +117,7 @@ app.get("/getCode", middleware, async (req, res) => {
 });
 
 
-app.post("/getRooms", async (req, res) => {
+app.post("/getRooms",  async (req, res) => {
     const startTimeHour = parseInt(req.body.startTime);
     const startTime = new Date();
     startTime.setHours(startTimeHour, 0, 0, 0);
@@ -127,6 +127,7 @@ app.post("/getRooms", async (req, res) => {
 
 
 app.post("/makeBooking", async (req, res) => {
+    console.log(req.body);
     const roomName = req.body.roomName;
     const startTime = new Date(req.body.startTime);
     const { success, message } = await makeBooking(roomName, startTime);

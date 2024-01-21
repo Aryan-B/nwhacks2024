@@ -12,7 +12,7 @@ async function getAvailableRooms(startTime) {
     let endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 24, 0, 0, 0);
 
 
-    console.log(today, endOfDay);
+    // console.log(today, endOfDay);
     try {
         const roomsCollection = db.collection('Rooms');
         const bookedRoomsCollection = db.collection('Bookings');
@@ -29,14 +29,10 @@ async function getAvailableRooms(startTime) {
         }).toArray();
 
 
-        console.log(bookings);
+        // console.log(bookings);
 
         bookings.forEach(booking => {
             roomAvailability[booking.roomCode][booking.startTime.getHours()] = false; // Mark as booked
-            console.log(booking.roomCode);
-            console.log(roomAvailability[booking.roomCode]);
-            console.log(startTime.getHours());
-            
         });
 
         // console.log(roomAvailability);
@@ -63,6 +59,7 @@ async function getAvailableRooms(startTime) {
 }
 
 async function makeBooking(roomName, startHour) {
+    console.log(roomName, startHour);
     const startTime = new Date(); // today's date
     startTime.setHours(startHour, 0, 0, 0); // setting the hour
 
