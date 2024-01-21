@@ -99,8 +99,8 @@ app.post("/register", async (req, res) => {
 });
 
 app.get("/logout", middleware, (req, res) => {
-  res.clearCookie("token");
-  res.status(200).send({ authStatus: "failed", identifier: req.user.identifier });
+    console.log("logout route hit");
+    return res.status(200).cookie("token", "", { expires: new Date(0) }).send({ authStatus: "failed", identifier: req.user.identifier });
 });
 
 app.get("/verify", middleware, (req, res) => {

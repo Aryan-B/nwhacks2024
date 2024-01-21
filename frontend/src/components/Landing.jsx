@@ -11,8 +11,7 @@ import useMapClick from "./hooks/useMapClick";
 import "../styles/layout.css";
 import { Dropdown, Button } from "react-bootstrap";
 import useMapChanged from "./hooks/useMapChanged";
-
-
+import Menu from "./menu";
 
 
 export default function Landing() {
@@ -343,6 +342,7 @@ export default function Landing() {
         </div>
 
         <div id="ui">
+          <Menu/>
         <div className="location-name">
           {venue?.venue.name ?? "Loading..."}
           <Dropdown onSelect={(eventKey) => setSelectedFloor(eventKey)}>
