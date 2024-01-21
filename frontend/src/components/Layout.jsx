@@ -47,18 +47,39 @@ export default function Layout() {
 
     mapView.addInteractivePolygonsForAllLocations();
 
+    const green = ["008", "029"];
+    const yellow = ["014", "001"];
+    const red = ["011", "Cube"];
+    const gray = ["067", "093"];
+
     venue.locations.forEach((location) => {
-      // An obstruction is something like a desk
-      if (location.id.includes("obstruction")) {
-        location.polygons.forEach((polygon) => {
-          mapView.setPolygonHoverColor(polygon, "#00ff00");
-        });
-      } else {
-        // if booked, hover red
-        // else, hover green?
-        location.polygons.forEach((polygon) => {
-          mapView.setPolygonHoverColor(polygon, "#fff8a8");
-        });
+      for (const r of green) {
+        if (location.id.includes(r)) {
+          location.polygons.forEach((polygon) => {
+            mapView.setPolygonColor(polygon, "#46e83a");
+          });
+        }
+      }
+      for (const r of yellow) {
+        if (location.id.includes(r)) {
+          location.polygons.forEach((polygon) => {
+            mapView.setPolygonColor(polygon, "#faec52");
+          });
+        }
+      }
+      for (const r of red) {
+        if (location.id.includes(r)) {
+          location.polygons.forEach((polygon) => {
+            mapView.setPolygonColor(polygon, "#f7332d");
+          });
+        }
+      }
+      for (const r of gray) {
+        if (location.id.includes(r)) {
+          location.polygons.forEach((polygon) => {
+            mapView.setPolygonColor(polygon, "#a19f9f");
+          });
+        }
       }
     });
 
