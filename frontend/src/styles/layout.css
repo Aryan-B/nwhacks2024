@@ -12,7 +12,32 @@
     flex-direction: column;
 }
 
+.AppTest {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
 .map{
     width: 100%;
     height: 100%;
+}
+
+.location-name {
+    margin-top: 5px;
+    margin-left: 20px;
+    color: #333;           /* Text color */
+    font-size: 1.5em;      /* Font size */
+    font-weight: bold;     /* Font weight */
+    margin-bottom: 10px;
+    position: absolute;
+    z-index: 100;
+}
+
+.left-margin {
+    margin-left: 20px;
+}
+
+.navigate-button {
+   margin-top: 2px;
 }
