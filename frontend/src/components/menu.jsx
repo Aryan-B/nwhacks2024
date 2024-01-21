@@ -1,3 +1,4 @@
+
 import "../styles/menu.css";
 
 export default function Menu() {
@@ -76,4 +77,5 @@ export default function Menu() {
       </div>
     </div>
   );
+
 }
