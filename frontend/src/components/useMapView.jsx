@@ -6,9 +6,7 @@ import {
   } from "@mappedin/mappedin-js";
   import { useCallback, useEffect, useRef, useState } from "react";
   
-  export default function useMapView(
-    venue,
-    options){
+  export default function useMapView(venue, options) {
     // Store the MapView instance in a state variable
     const [mapView, setMapView] = useState(null);
     const mapRef = useRef(null);
@@ -40,7 +38,7 @@ import {
   
         mapRef.current = element;
   
-        if (mapView == null && venue != null && isRendering.current == false) {
+        if (mapView == null && venue != null && isRendering.current === false) {
           renderVenue(element, venue, options);
         }
       },

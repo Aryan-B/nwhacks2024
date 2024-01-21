@@ -15,6 +15,7 @@ import Unauthorized from "./components/Unauthorized";
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoutes from "./components/protectedRoutes";
 import Landing from "./components/Landing";
+import Navigate from "./components/Navigate";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           <Route path="*" element={<Missing />} />
         </Route>
         <Route path="home" element={<Layout />}>
+          <Route path="*" element={<Missing />} />
+        </Route>
+        <Route path="navigate" element={<Navigate />}>
           <Route path="*" element={<Missing />} />
         </Route>
         <Route path="login" element={<Login />} />
